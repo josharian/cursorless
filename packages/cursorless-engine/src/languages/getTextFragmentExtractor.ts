@@ -122,7 +122,7 @@ const fullDocumentTextFragmentExtractor = null;
 
 const textFragmentExtractors: Record<
   SupportedLanguageId,
-  TextFragmentExtractor | FullDocumentTextFragmentExtractor
+  TextFragmentExtractor | FullDocumentTextFragmentExtractor | null
 > = {
   c: constructDefaultTextFragmentExtractor("c"),
   clojure: constructDefaultTextFragmentExtractor(
