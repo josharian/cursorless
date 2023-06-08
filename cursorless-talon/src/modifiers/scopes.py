@@ -28,6 +28,7 @@ scope_types = {
     "comment": "comment",
     "funk name": "functionName",
     "funk": "namedFunction",
+    "access": "fieldAccess",
     "if state": "ifStatement",
     "instance": "instance",
     "item": "collectionItem",

@@ -1,3 +1,5 @@
+;; import javascript.fieldAccess.scm
+
 (_
     name: (_) @name
 ) @_.domain
