@@ -1,6 +1,7 @@
 import { SimpleScopeTypeType } from "@cursorless/common";
 import type { SyntaxNode } from "web-tree-sitter";
 import {
+  NodeFinder,
   NodeMatcher,
   NodeMatcherAlternative,
   SelectionWithEditor,
@@ -156,22 +157,25 @@ function valueMatcher() {
 const mapTypes = ["object", "object_pattern"];
 const listTypes = ["array", "array_pattern"];
 
+function itemNodeFinder(): NodeFinder {
+  return (node: SyntaxNode) => {
+    if (
+      node.type === "variable_declarator" &&
+      node.childForFieldName("value") == null
+    ) {
+      return node;
+    }
+    return null;
+  };
+}
+
 const nodeMatchers: Partial<
   Record<SimpleScopeTypeType, NodeMatcherAlternative>
 > = {
   map: mapTypes,
   list: listTypes,
   string: ["string", "template_string"],
-  collectionItem: cascadingMatcher(
-    matcher(
-      patternFinder("lexical_declaration.variable_declarator!.identifier"),
-      argumentSelectionExtractor(),
-    ),
-    matcher(
-      patternFinder("variable_declaration.variable_declarator!.identifier"),
-      argumentSelectionExtractor(),
-    ),
-  ),
+  collectionItem: matcher(itemNodeFinder(), argumentSelectionExtractor()),
   collectionKey: trailingMatcher(
     [
       "pair[key]",
