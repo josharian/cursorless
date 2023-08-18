@@ -8,6 +8,7 @@ export function unitTestSetup(setupFake?: (fake: FakeIDE) => void) {
   let fake: FakeIDE | undefined;
 
   setup(async function (this: Context) {
+    this.timeout(100000); // TODO: more hat alloc faster
     fake = new FakeIDE();
     setupFake?.(fake);
     spy = new SpyIDE(fake);

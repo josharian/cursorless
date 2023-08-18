@@ -65,6 +65,17 @@ export class Range {
   }
 
   /**
+   * Check if this range is equal to `other`.
+   *
+   * @param other A range.
+   * @return `true` if the start and end of the given range are equal to
+   * the start and end of this range.
+   */
+  public isEqual(other: Range): boolean {
+    return this.start.isEqual(other.start) && this.end.isEqual(other.end);
+  }
+
+  /**
    * `true` if `start.line` and `end.line` are equal.
    */
   get isSingleLine(): boolean {
@@ -145,5 +156,13 @@ export class Range {
     return isReversed
       ? new Selection(this.end, this.start)
       : new Selection(this.start, this.end);
+  }
+
+  /**
+   * Return a concise representation of the range
+   * @returns concise representation
+   **/
+  public concise(): string {
+    return `(${this.start.line}:${this.start.character}-${this.end.line}:${this.end.character})`;
   }
 }

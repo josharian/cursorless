@@ -1,0 +1,29 @@
+nTokens: 479
+nHats:
+	mean: 100%
+	std: 0%
+	min: 100%
+	max: 100%
+	spark: 0              25               50               75             █ 100
+
+nPenalty0:
+	mean: 8%
+	std: 0%
+	min: 7%
+	max: 8%
+	spark: 0    █         25               50               75               100
+
+nPenalty1:
+	mean: 83%
+	std: 0%
+	min: 82%
+	max: 84%
+	spark: 0              25               50               75    █          100
+
+nPenalty2:
+	mean: 10%
+	std: 0%
+	min: 9%
+	max: 10%
+	spark: 0     █▄       25               50               75               100
+

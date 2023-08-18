@@ -1,0 +1,189 @@
+*  *       *            *      * *
+// Package intern interns strings.
+[] [-----] [----] [-----] [-----]#
+
+x             x                 x
+*     *       * *     *       * *
+// Interning is best effort only.
+[] [-------] [] [--] [----] [--]#
+
+v                       x
+*         *  *      *   *      *    *
+// Interned strings may be removed automatically
+[] [------] [-----] [-] [] [-----] [-----------]
+
+w            x                     v
+*  *   *     * *             *     *
+// at any time without notification.
+[] [] [-] [--] [-----] [----------]#
+
+o   x                v       x
+*   *        *     * *       *      *
+// All functions may be called concurrently
+[] [-] [-------] [-] [] [----] [----------]
+
+#              x   x     x  x    w
+*     *        *   *     *  *    *
+// with themselves and each other.
+[] [--] [--------] [-] [--] [---]#
+
+        x
+   *    *
+package intern
+[-----] [----]
+
+ x       x  x
+ *     * *  *
+import "sync"
+[----] #[--]#
+
+v      v v   ox      w   #v
+*      * *   **    * *   **   *
+var pool sync.Pool = sync.Pool{
+[-] [--] [--]#[--] # [--]#[--]#
+
+   x  x      v        x  v
+   ** *   ** *        ** *
+␉New: func() interface{} {
+ [-]# [--]## [-------]## #
+
+     x     x x  w      x o     x
+     *     * *  **     ***     *
+␉	return make(map[string]string)
+  [----] [--]#[-]#[----]#[----]#
+
+ x
+ **
+␉},
+ ##
+
+v
+*
+}
+#
+
+^  #         v    ^x        v^
+*  *         *    **        **
+// String returns s, interned.
+[] [----] [-----] ## [------]#
+
+v         vv0  x    v >      w
+*         ***  *    * *      *
+func String(s string) string {
+[--] [----]## [----]# [----] #
+
+ v xx  v  0 v ww>o v x~     x+     o
+ * **  *  * * **** * **     **     *
+␉m := pool.Get().(map[string]string)
+ # ## [--]#[-]####[-]#[----]#[----]#
+
+ vv  v vv wv v
+ **  * ** **b*
+␉c, ok := m[s]
+ ## [] ## ####
+
+  w w  o
+  * *  *
+␉if ok {
+ [] [] #
+
+     w~ w #o#
+     ** * ***
+␉	pool.Put(m)
+  [--]#[-]###
+
+   w     w
+   *     *
+␉	return c
+  [----] #
+
+ w
+ *
+␉}
+ #
+
+ #w w w
+ **g* * r
+␉m[s] = s
+ #### # #
+
+  o  + o ^^^
+  *  * * ***
+␉pool.Put(m)
+ [--]#[-]###
+
+ x
+ *      p
+␉return s
+ [----] #
+
+o
+*
+}
+#
+
+0  w     v       o    w      v  w      ww    o
+*  *     *       *    *      *  *      **    *    b
+// Bytes returns b converted to a string, interned.
+[] [---] [-----] # [-------] [] # [----]# [------]#
+
+o     v   0# oo w  0      o #
+*     *   ** ** *  *      * *
+func Bytes(b []byte) string {
+[--] [---]## ##[--]# [----] #
+
+ 0 wo    o  # >> ~ o #      #      ~
+ * **    *g * **r* * *y     *1     *
+␉m := pool.Get().(map[string]string)
+ # ## [--]#[-]####[-]#[----]#[----]#
+
+ oo  w o# >^      +^+^
+ **  * ** **2     ****
+␉c, ok := m[string(b)]
+ ## [] ## ##[----]####
+
+  # #  ^
+  * *  *
+␉if ok {
+ [] [] #
+
+     #  #  ~
+     *p * b*b
+␉	pool.Put(m)
+  [--]#[-]###
+
+   ^     #
+   *     *
+␉	return c
+  [----] #
+
+ #
+ *
+␉}
+ #
+
+ x #^      # 0
+ b **      *g*g
+␉s := string(b)
+ # ## [----]###
+
+ +0v0 0 w
+ **b* * b
+␉m[s] = s
+ #### # #
+
+  ^    ^
+  *  y * rbr
+␉pool.Put(m)
+ [--]#[-]###
+
+  0     o
+  *     b
+␉return s
+ [----] #
+
+^
+*
+}
+#
+

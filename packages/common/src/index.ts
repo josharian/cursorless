@@ -86,3 +86,7 @@ export * from "./getFakeCommandServerApi";
 export * from "./types/TestCaseFixture";
 export * from "./util/getEnvironmentVariableStrict";
 export * from "./util/CompositeKeyDefaultMap";
+export {
+  InMemoryTextDocument,
+  InMemoryTextEditor,
+} from "./testUtil/mockEditor";
