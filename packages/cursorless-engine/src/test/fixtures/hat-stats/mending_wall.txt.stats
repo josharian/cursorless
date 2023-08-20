@@ -7,23 +7,23 @@ nHats:
 	spark: 0              25               50               75             █ 100
 
 nPenalty0:
-	mean: 8%
+	mean: 7%
 	std: 0%
 	min: 7%
 	max: 8%
 	spark: 0    █         25               50               75               100
 
 nPenalty1:
-	mean: 83%
-	std: 0%
-	min: 82%
-	max: 84%
-	spark: 0              25               50               75    █          100
+	mean: 80%
+	std: 1%
+	min: 78%
+	max: 81%
+	spark: 0              25               50               75 ▁█▄           100
 
 nPenalty2:
-	mean: 10%
-	std: 0%
-	min: 9%
-	max: 10%
-	spark: 0     █▄       25               50               75               100
+	mean: 13%
+	std: 1%
+	min: 11%
+	max: 15%
+	spark: 0      ▂█▁     25               50               75               100
 

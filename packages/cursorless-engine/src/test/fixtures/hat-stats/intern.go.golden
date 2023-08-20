@@ -1,54 +1,54 @@
-*  *       *            *      * *
+*   *       *           *      * *
 // Package intern interns strings.
 [] [-----] [----] [-----] [-----]#
 
-x             x                 x
-*     *       * *     *       * *
+x                               x
+*     *      *     *  *       * *
 // Interning is best effort only.
 [] [-------] [] [--] [----] [--]#
 
-v                       x
-*         *  *      *   *      *    *
+v
+*         *   *       * *      *    *
 // Interned strings may be removed automatically
 [] [------] [-----] [-] [] [-----] [-----------]
 
-w            x                     v
-*  *   *     * *             *     *
+w   x  x                           v
+*   *  *    *     *          *     *
 // at any time without notification.
 [] [] [-] [--] [-----] [----------]#
 
-o   x                v       x
-*   *        *     * *       *      *
+o   x              x  x      x      x
+*   *        *     *  *      *      *
 // All functions may be called concurrently
 [] [-] [-------] [-] [] [----] [----------]
 
-#              x   x     x  x    w
-*     *        *   *     *  *    *
+#              x     v   x      vw
+*  *           *     *   *      **
 // with themselves and each other.
 [] [--] [--------] [-] [--] [---]#
 
-        x
-   *    *
+         v
+   *     *
 package intern
 [-----] [----]
 
- x       x  x
- *     * *  *
+         v  x
+  *    * *  *
 import "sync"
 [----] #[--]#
 
-v      v v   ox      w   #v
-*      * *   **    * *   **   *
+ x     v  w  o x      o  # v
+ *     *  *  * *   *  *  * *  *
 var pool sync.Pool = sync.Pool{
 [-] [--] [--]#[--] # [--]#[--]#
 
-   x  x      v        x  v
-   ** *   ** *        ** *
+   x   x       v      x  v
+   **  *  **   *      ** *
 ␉New: func() interface{} {
  [-]# [--]## [-------]## #
 
-     x     x x  w      x o     x
-     *     * *  **     ***     *
+     v     x x  x      x  w    x
+     *     * *  **     ** *    *
 ␉	return make(map[string]string)
   [----] [--]#[-]#[----]#[----]#
 
@@ -62,37 +62,37 @@ v
 }
 #
 
-^  #         v    ^x        v^
-*  *         *    **        **
+^   o        w    xx        w^
+*   *        *    **        **
 // String returns s, interned.
 [] [----] [-----] ## [------]#
 
-v         vv0  x    v >      w
-*         ***  *    * *      *
+   v      vvv  #    v  ^     w
+   *      ***  *    *  *     *
 func String(s string) string {
 [--] [----]## [----]# [----] #
 
- v xx  v  0 v ww>o v x~     x+     o
- * **  *  * * **** * **     **     *
+ x xx  w  0 v ww>o v x  w   x 0    o
+ * **  *  * * **** * *  *   * *    *
 ␉m := pool.Get().(map[string]string)
  # ## [--]#[-]####[-]#[----]#[----]#
 
- vv  v vv wv v
- **  * ** **b*
+ wv  v vv vvwv
+ **  * ** ****
 ␉c, ok := m[s]
  ## [] ## ####
 
-  w w  o
-  * *  *
+  x  w o
+  *  * *
 ␉if ok {
  [] [] #
 
-     w~ w #o#
+     w~ o #w#
      ** * ***
 ␉	pool.Put(m)
   [--]#[-]###
 
-   w     w
+   w     o
    *     *
 ␉	return c
   [----] #
@@ -102,18 +102,18 @@ func String(s string) string {
 ␉}
  #
 
- #w w w
- **g* * r
+ owow w #
+ **** * *
 ␉m[s] = s
  #### # #
 
-  o  + o ^^^
+  o  + # ^#^
   *  * * ***
 ␉pool.Put(m)
  [--]#[-]###
 
- x
- *      p
+  o     ^
+  *     *
 ␉return s
  [----] #
 
@@ -122,37 +122,37 @@ o
 }
 #
 
-0  w     v       o    w      v  w      ww    o
-*  *     *       *    *      *  *      **    *    b
+0   #       ^    x    v       # w      ww    #
+*   *       *    *    *       * *      **    *    b
 // Bytes returns b converted to a string, interned.
 [] [---] [-----] # [-------] [] # [----]# [------]#
 
-o     v   0# oo w  0      o #
-*     *   ** ** *  *      * *
+ 0    ^   0v oo 0  0      o #
+ *    *   ** ** *  *      * *
 func Bytes(b []byte) string {
 [--] [---]## ##[--]# [----] #
 
- 0 wo    o  # >> ~ o #      #      ~
- * **    *g * **r* * *y     *1     *
+ ^ wo    o  ^ >> ~ o #  o   # >    ~
+ * **    *g * **r* * *  *   * *    *
 ␉m := pool.Get().(map[string]string)
  # ## [--]#[-]####[-]#[----]#[----]#
 
- oo  w o# >^      +^+^
- **  * ** **2     ****
+ #o  o o# 0^ ~    +w+^
+ **  * ** ** *    ****
 ␉c, ok := m[string(b)]
  ## [] ## ##[----]####
 
-  # #  ^
-  * *  *
+  v  # ^
+  *  * *
 ␉if ok {
  [] [] #
 
-     #  #  ~
+     #  >  >
      *p * b*b
 ␉	pool.Put(m)
   [--]#[-]###
 
-   ^     #
+   0     ^
    *     *
 ␉	return c
   [----] #
@@ -162,23 +162,23 @@ func Bytes(b []byte) string {
 ␉}
  #
 
- x #^      # 0
- b **      *g*g
+ 0 #^      # o
+ * **      *g*g
 ␉s := string(b)
  # ## [----]###
 
- +0v0 0 w
- **b* * b
+ ~0>0 0 ~
+ **** * *
 ␉m[s] = s
  #### # #
 
-  ^    ^
-  *  y * rbr
+  ^    ~  +
+  *  y * r*r
 ␉pool.Put(m)
  [--]#[-]###
 
-  0     o
-  *     b
+  >     +
+  *     *
 ␉return s
  [----] #
 

@@ -14,16 +14,16 @@ nPenalty0:
 	spark: 0        █     25               50               75               100
 
 nPenalty1:
-	mean: 84%
-	std: 1%
-	min: 83%
+	mean: 85%
+	std: 0%
+	min: 85%
 	max: 85%
-	spark: 0              25               50               75    ▅█         100
+	spark: 0              25               50               75     █         100
 
 nPenalty2:
-	mean: 1%
-	std: 1%
+	mean: 0%
+	std: 0%
 	min: 0%
-	max: 2%
+	max: 0%
 	spark: 0 █            25               50               75               100
 
